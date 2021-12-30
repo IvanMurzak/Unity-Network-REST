@@ -2,7 +2,7 @@
 
 ![npm](https://img.shields.io/npm/v/extensions.unity.network)
 
-REST plugin for client app/game to communicate with single or multiple remote servers using SOLID principles and clean code. Only JSON format supported for data sending/receiving.
+REST plugin for client app/game to communicate with single or multiple remote servers using SOLID principles and clean code. Only JSON format is supported for data sending/receiving.
 
 ### Features
 - :white_check_mark: Supported REST requests
