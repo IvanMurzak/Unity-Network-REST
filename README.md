@@ -1,4 +1,4 @@
-# Unity Network REST extension
+# Unity Network REST
 
 ![npm](https://img.shields.io/npm/v/extensions.unity.network)
 
