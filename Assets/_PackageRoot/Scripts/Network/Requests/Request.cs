@@ -241,7 +241,7 @@ namespace Network.Extension
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 		protected	virtual		string							GetJSON							(UnityWebRequest unityRequest)
 		{
-			var bytes = unityRequest.downloadHandler.data;
+			var bytes = unityRequest.downloadHandler == null ? null : unityRequest.downloadHandler.data;
 				bytes = FixBrokenByteArray(bytes);
 			return Encoding.UTF8.GetString(bytes);
 		}
@@ -260,7 +260,7 @@ namespace Network.Extension
 				DebugFormat.LogException<Request<T>>(e);
 
 #pragma warning disable CS0168 // Variable is declared but never used
-				try					{ DebugFormat.LogError(this, $"JSON ({typeof(K).Name}):\n\n{JsonPrettify(json)}\n"); }
+				try					 { DebugFormat.LogError(this, $"JSON ({typeof(K).Name}):\n\n{JsonPrettify(json)}\n"); }
 				catch (Exception e2) { DebugFormat.LogError(this, $"JSON ({typeof(K).Name}):\n\n{json}\n"); }
 #pragma warning restore CS0168 // Variable is declared but never used
 			}
@@ -269,6 +269,9 @@ namespace Network.Extension
 
 		private					byte[]							FixBrokenByteArray				(byte[] brokenBytes)
 		{
+			if (brokenBytes == null) 
+				return new byte[0];
+
 			if (brokenBytes.Length > 3 &&
 				brokenBytes[0] == (byte)239 &&
 				brokenBytes[1] == (byte)187 &&
