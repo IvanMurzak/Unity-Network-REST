@@ -14,7 +14,15 @@ REST plugin for client app/game to communicate with single or multiple remote se
 - :white_check_mark: Headers control
 - :white_check_mark: Requests in dedicated background thread
 
-# How to install
+# How to install - Option 1 (RECOMMENDED)
+
+- Install [ODIN Inspector](https://odininspector.com/)
+- Install [OpenUPM-CLI](https://github.com/openupm/openupm-cli#installation)
+- Open command line in Unity project folder
+- `openupm --registry https://registry.npmjs.org add extensions.unity.network`
+
+# How to install - Option 2
+
 - Install [ODIN Inspector](https://odininspector.com/)
 - Add this code to <code>/Packages/manifest.json</code>
 ```json
