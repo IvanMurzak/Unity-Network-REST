@@ -1,6 +1,6 @@
 # Unity Network REST
 
-![npm](https://img.shields.io/npm/v/extensions.unity.network)
+![npm](https://img.shields.io/npm/v/extensions.unity.network) ![License](https://img.shields.io/github/license/IvanMurzak/Unity-Network-REST) [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 
 REST plugin for client app/game to communicate with single or multiple remote servers using SOLID principles and clean code. Only JSON format is supported for data sending/receiving.
 
