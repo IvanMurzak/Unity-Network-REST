@@ -1,6 +1,6 @@
 # Unity Network REST
 
-![npm](https://img.shields.io/npm/v/extensions.unity.network)
+![npm](https://img.shields.io/npm/v/extensions.unity.network) ![License](https://img.shields.io/github/license/IvanMurzak/Unity-Network-REST) [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 
 REST plugin for client app/game to communicate with single or multiple remote servers using SOLID principles and clean code. Only JSON format is supported for data sending/receiving.
 
@@ -14,20 +14,30 @@ REST plugin for client app/game to communicate with single or multiple remote se
 - :white_check_mark: Headers control
 - :white_check_mark: Requests in dedicated background thread
 
-# How to install
+# How to install - Option 1 (RECOMMENDED)
+
+- Install [ODIN Inspector](https://odininspector.com/)
+- Install [OpenUPM-CLI](https://github.com/openupm/openupm-cli#installation)
+- Open command line in Unity project folder
+- `openupm --registry https://registry.npmjs.org add extensions.unity.network`
+
+# How to install - Option 2
+
 - Install [ODIN Inspector](https://odininspector.com/)
 - Add this code to <code>/Packages/manifest.json</code>
 ```json
 {
   "dependencies": {
-    "extensions.unity.network": "1.3.9",
+    "extensions.unity.network": "1.4.1",
   },
   "scopedRegistries": [
     {
-      "name": "Unity Extensions",
-      "url": "https://registry.npmjs.org",
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
       "scopes": [
-        "extensions.unity"
+        "extensions.unity",
+        "com.cysharp",
+        "com.neuecc"
       ]
     }
   ]
