@@ -15,9 +15,7 @@
   "dependencies": {
     "com.cysharp.unitask": "2.3.3",
     "com.neuecc.unirx": "7.1.0",
-    "jillejr.newtonsoft.json-for-unity": "13.0.102",
-    "jillejr.newtonsoft.json-for-unity.converters": "1.5.0",
-    "extensions.unity.base": "1.10.0",
+    "com.unity.nuget.newtonsoft-json": "3.0.2",
     "extensions.unity.saver": "1.0.8"
   },
   "scopedRegistries": [
@@ -28,13 +26,6 @@
         "extensions.unity",
         "com.cysharp",
         "com.neuecc"
-      ]
-    },
-    {
-      "name": "Packages from jillejr",
-        "url": "https://npm.cloudsmith.io/jillejr/newtonsoft-json-for-unity/",
-        "scopes": [
-        "jillejr"
       ]
     }
   ]

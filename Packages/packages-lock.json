@@ -37,6 +37,13 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.0.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.test-framework": {
       "version": "1.1.33",
       "depth": 0,
@@ -66,20 +73,6 @@
         "com.neuecc.unirx": "7.1.0"
       },
       "url": "https://package.openupm.com"
-    },
-    "jillejr.newtonsoft.json-for-unity": {
-      "version": "13.0.102",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://npm.cloudsmith.io/jillejr/newtonsoft-json-for-unity"
-    },
-    "jillejr.newtonsoft.json-for-unity.converters": {
-      "version": "1.5.0",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://npm.cloudsmith.io/jillejr/newtonsoft-json-for-unity"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
