@@ -1,18 +1,18 @@
 {
   "dependencies": {
     "com.cysharp.unitask": {
-      "version": "2.2.5",
+      "version": "2.3.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
-      "url": "https://registry.npmjs.org"
+      "url": "https://package.openupm.com"
     },
     "com.neuecc.unirx": {
       "version": "7.1.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
-      "url": "https://registry.npmjs.org"
+      "url": "https://package.openupm.com"
     },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
@@ -57,24 +57,15 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
-    "extensions.unity.base": {
-      "version": "1.10.0",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.neuecc.unirx": "7.1.0"
-      },
-      "url": "https://registry.npmjs.org"
-    },
     "extensions.unity.saver": {
       "version": "1.0.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.cysharp.unitask": "2.2.5",
+        "com.cysharp.unitask": "2.3.3",
         "com.neuecc.unirx": "7.1.0"
       },
-      "url": "https://registry.npmjs.org"
+      "url": "https://package.openupm.com"
     },
     "jillejr.newtonsoft.json-for-unity": {
       "version": "13.0.102",

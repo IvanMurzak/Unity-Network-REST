@@ -2,6 +2,7 @@
 using System.Text;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Network.Extension
 {
@@ -23,8 +24,8 @@ namespace Network.Extension
 
 #if UNITY_EDITOR
 #pragma warning disable CS0168 // Variable is declared but never used
-			try						{ DebugFormat.Log<RequestPost<T1, T2>>($"JSON {RESTMethod}:\n\n{JsonPrettify(json)}\n"); }
-			catch (Exception e)		{ DebugFormat.Log<RequestPost<T1, T2>>($"JSON {RESTMethod}:\n\n{json}\n"); }
+			try						{ Debug.Log($"JSON {RESTMethod}:\n\n{JsonPrettify(json)}\n"); }
+			catch (Exception e)		{ Debug.Log($"JSON {RESTMethod}:\n\n{json}\n"); }
 #pragma warning restore CS0168 // Variable is declared but never used
 #endif
 

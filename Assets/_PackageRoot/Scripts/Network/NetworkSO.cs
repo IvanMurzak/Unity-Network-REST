@@ -12,7 +12,6 @@ namespace Network.Extension
 	public abstract class NetworkSO : SaverScriptableObject<NetworkSO.SaveData>
 	{
 												public		const		long						AccessTokenExpiredCode		= 401;
-															static		Color						AlarmColor()				=> "#FF7777".Parse(Color.red);
 
 												protected	override	string						SaverPath					=> "network";
 												protected	override	string						SaverFileName				=> $"network_{name}.db";
@@ -53,7 +52,7 @@ namespace Network.Extension
 			AccessTokenHeader = null;
 
 			base.OnEnable();
-			DebugFormat.Log(this);
+			Debug.Log($"{name}.OnEnable", this);
 
 			compositeDisposable.Clear();
 			GlobalEvents.OnHttpError.Where(httpError => httpError.httpResponseCode == AccessTokenExpiredCode)
@@ -62,8 +61,8 @@ namespace Network.Extension
 		}
 		protected	override	void					OnDataLoaded		(SaveData data)
 		{
-			DebugFormat.Log(this);
-			Data = new SaveData()
+            Debug.Log($"{name}.OnDataLoaded", this);
+            Data = new SaveData()
 			{
 				accessToken = data.accessToken,
 				refreshToken = data.refreshToken
@@ -87,13 +86,13 @@ namespace Network.Extension
 			{
 				var id = Request<T>.IncrementalID;
 
-				DebugFormat.Log(this, $"[{request.RESTMethod}] {id} - {request.RequestURL}", this);
+                Debug.Log($"{name} [{request.RESTMethod}] {id} - {request.RequestURL}", this);
 				if (debugHeaders)
 				{
 					var headers = request.GetHeaders();
 					foreach (var key in headers.Keys)
 					{
-						DebugFormat.Log(this, $"Header {key} : {headers[key]}");
+                        Debug.Log($"{name} Header {key} : {headers[key]}", this);
 					}
 				}
 				var debugEvents = new DebugRequestEvents<T>(compositeDisposable, request, id);
@@ -108,7 +107,7 @@ namespace Network.Extension
 					var headers = request.LastUnityRequest.GetResponseHeaders();
 					foreach (var key in headers.Keys)
 					{
-						DebugFormat.Log(this, $"Response Header {key} : {headers[key]}");
+						Debug.Log($"{name} Response Header {key} : {headers[key]}", this);
 					}
 				}
 			}

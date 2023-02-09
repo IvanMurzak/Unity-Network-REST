@@ -28,14 +28,16 @@ REST plugin for client app/game to communicate with single or multiple remote se
 ```json
 {
   "dependencies": {
-    "extensions.unity.network": "1.4.0",
+    "extensions.unity.network": "1.4.1",
   },
   "scopedRegistries": [
     {
-      "name": "Unity Extensions",
-      "url": "https://registry.npmjs.org",
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
       "scopes": [
-        "extensions.unity"
+        "extensions.unity",
+        "com.cysharp",
+        "com.neuecc"
       ]
     }
   ]

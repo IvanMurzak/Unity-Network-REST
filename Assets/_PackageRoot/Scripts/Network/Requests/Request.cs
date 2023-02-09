@@ -87,7 +87,7 @@ namespace Network.Extension
 			return x =>
 			{
 				try { action(x); }
-				catch (Exception e) { DebugFormat.LogException(component, e); }
+				catch (Exception e) { Debug.LogException(e, component); }
 			};
 		}
 
@@ -137,7 +137,7 @@ namespace Network.Extension
 				catch (Exception e2)
 				{
 					success = false;
-					DebugFormat.LogException<Request<T>>(e2);
+					Debug.LogException(e2);
 				}
 				Events.SendComplete(success);
 			}
@@ -257,11 +257,11 @@ namespace Network.Extension
 			catch (Exception e)
 			{
 				Events.SendSerializationError(e.Message);
-				DebugFormat.LogException<Request<T>>(e);
+				Debug.LogException(e);
 
 #pragma warning disable CS0168 // Variable is declared but never used
-				try					 { DebugFormat.LogError(this, $"JSON ({typeof(K).Name}):\n\n{JsonPrettify(json)}\n"); }
-				catch (Exception e2) { DebugFormat.LogError(this, $"JSON ({typeof(K).Name}):\n\n{json}\n"); }
+				try					 { Debug.LogError($"JSON ({typeof(K).Name}):\n\n{JsonPrettify(json)}\n"); }
+				catch (Exception e2) { Debug.LogError($"JSON ({typeof(K).Name}):\n\n{json}\n"); }
 #pragma warning restore CS0168 // Variable is declared but never used
 			}
 			return default(K);
