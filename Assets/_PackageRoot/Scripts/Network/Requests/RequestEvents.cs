@@ -29,21 +29,21 @@ namespace Network.Extension
         public      void                        SendHttpError           (HttpError result)              => onHttpError.OnNext(result);
         public      void                        SendHttpErrorRaw        (string result)                 => onHttpErrorRaw.OnNext(result);
         public      void                        SendNetworkError        (NetworkError result)           => onNetworkError.OnNext(result);
-        public      void                        SendProgress            (float result)          => onProgress.OnNext(result);
+        public      void                        SendProgress            (float result)                  => onProgress.OnNext(result);
         public      void                        SendComplete            (bool result)                   => onComplete.OnNext(result);
 
         public      CompositeDisposable         Subscribe               (RequestEvents<object> events)
         {
             var compositeDisposable = new CompositeDisposable();
 
-            OnSuccess           .Subscribe(x => events.SendSuccess(x));
-            OnSuccessRaw        .Subscribe(events.SendSuccessRaw);
-            OnSerializationError.Subscribe(events.SendSerializationError);
-            OnHttpError         .Subscribe(events.SendHttpError);
-            OnHttpErrorRaw      .Subscribe(events.SendHttpErrorRaw);
-            OnNetworkError      .Subscribe(events.SendNetworkError);
-            OnProgress          .Subscribe(events.SendProgress);
-            OnComplete          .Subscribe(events.SendComplete);
+            UniRx.ObservableExtensions.Subscribe(OnSuccess,             x => events.SendSuccess(x));
+            UniRx.ObservableExtensions.Subscribe(OnSuccessRaw,          events.SendSuccessRaw);
+            UniRx.ObservableExtensions.Subscribe(OnSerializationError,  events.SendSerializationError);
+            UniRx.ObservableExtensions.Subscribe(OnHttpError,           events.SendHttpError);
+            UniRx.ObservableExtensions.Subscribe(OnHttpErrorRaw,        events.SendHttpErrorRaw);
+            UniRx.ObservableExtensions.Subscribe(OnNetworkError,        events.SendNetworkError);
+            UniRx.ObservableExtensions.Subscribe(OnProgress,            events.SendProgress);
+            UniRx.ObservableExtensions.Subscribe(OnComplete,            events.SendComplete);
 
             return compositeDisposable;
         }
@@ -51,14 +51,14 @@ namespace Network.Extension
         {
             var compositeDisposable = new CompositeDisposable();
 
-            OnSuccess           .Subscribe(x => events.SendSuccess(x));
-            OnSuccessRaw        .Subscribe(events.SendSuccessRaw);
-            OnSerializationError.Subscribe(events.SendSerializationError);
-            OnHttpError         .Subscribe(events.SendHttpError);
-            OnHttpErrorRaw      .Subscribe(events.SendHttpErrorRaw);
-            OnNetworkError      .Subscribe(events.SendNetworkError);
-            OnProgress          .Subscribe(events.SendProgress);
-            OnComplete          .Subscribe(events.SendComplete);
+            UniRx.ObservableExtensions.Subscribe(OnSuccess,             x => events.SendSuccess(x));
+            UniRx.ObservableExtensions.Subscribe(OnSuccessRaw,          events.SendSuccessRaw);
+            UniRx.ObservableExtensions.Subscribe(OnSerializationError,  events.SendSerializationError);
+            UniRx.ObservableExtensions.Subscribe(OnHttpError,           events.SendHttpError);
+            UniRx.ObservableExtensions.Subscribe(OnHttpErrorRaw,        events.SendHttpErrorRaw);
+            UniRx.ObservableExtensions.Subscribe(OnNetworkError,        events.SendNetworkError);
+            UniRx.ObservableExtensions.Subscribe(OnProgress,            events.SendProgress);
+            UniRx.ObservableExtensions.Subscribe(OnComplete,            events.SendComplete);
 
             return compositeDisposable;
         }

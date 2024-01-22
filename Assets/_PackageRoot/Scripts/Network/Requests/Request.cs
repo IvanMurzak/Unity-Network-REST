@@ -148,43 +148,43 @@ namespace Network.Extension
         }
         public                  Request<T>                      SubscribeOnSuccess              (Action<T> action, Component component = null)
         {
-            var disaposables = Events.OnSuccess.Subscribe(TryCatchAction(action, component));
+            var disaposables = UniRx.ObservableExtensions.Subscribe(Events.OnSuccess, TryCatchAction(action, component));
             if (component != null) disaposables.AddTo(component);
             return this;
         }
         public                  Request<T>                      SubscribeOnSuccessRaw           (Action<string> action, Component component = null)
         {
-            var disaposables = Events.OnSuccessRaw.Subscribe(TryCatchAction(action, component));
+            var disaposables = UniRx.ObservableExtensions.Subscribe(Events.OnSuccessRaw, TryCatchAction(action, component));
             if (component != null) disaposables.AddTo(component);
             return this;
         }
         public                  Request<T>                      SubscribeOnSerializationError   (Action<string> action, Component component = null)
         {
-            var disaposables = Events.OnSerializationError.Subscribe(TryCatchAction(action, component));
+            var disaposables = UniRx.ObservableExtensions.Subscribe(Events.OnSerializationError, TryCatchAction(action, component));
             if (component != null) disaposables.AddTo(component);
             return this;
         }
         public                  Request<T>                      SubscribeOnHttpError            (Action<HttpError> action, Component component = null)
         {
-            var disaposables = Events.OnHttpError.Subscribe(TryCatchAction(action, component));
+            var disaposables = UniRx.ObservableExtensions.Subscribe(Events.OnHttpError, TryCatchAction(action, component));
             if (component != null) disaposables.AddTo(component);
             return this;
         }
         public                  Request<T>                      SubscribeOnNetworkError         (Action<NetworkError> action, Component component = null)
         {
-            var disaposables = Events.OnNetworkError.Subscribe(action);
+            var disaposables = UniRx.ObservableExtensions.Subscribe(Events.OnNetworkError, action);
             if (component != null) disaposables.AddTo(component);
             return this;
         }
         public                  Request<T>                      SubscribeOnProgress             (Action<float> action, Component component = null)
         {
-            var disaposables = Events.OnProgress.Subscribe(action);
+            var disaposables = UniRx.ObservableExtensions.Subscribe(Events.OnProgress, action);
             if (component != null) disaposables.AddTo(component);
             return this;
         }
         public                  Request<T>                      SubscribeOnComplete             (Action<bool> action, Component component = null)
         {
-            var disaposables = Events.OnComplete.Subscribe(action);
+            var disaposables = UniRx.ObservableExtensions.Subscribe(Events.OnComplete, action);
             if (component != null) disaposables.AddTo(component);
             return this;
         }

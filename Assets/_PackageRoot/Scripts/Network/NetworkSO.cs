@@ -55,9 +55,11 @@ namespace Network.Extension
             Debug.Log($"{name}.OnEnable", this);
 
             compositeDisposable.Clear();
-            GlobalEvents.OnHttpError.Where(httpError => httpError.httpResponseCode == AccessTokenExpiredCode)
-                .Subscribe(httpError => SetToken(null, null))           
-                .AddTo(compositeDisposable);
+            UniRx.ObservableExtensions.Subscribe
+            (
+                GlobalEvents.OnHttpError.Where(httpError => httpError.httpResponseCode == AccessTokenExpiredCode),
+                httpError => SetToken(null, null)
+            ).AddTo(compositeDisposable);
         }
         protected   override    void                    OnDataLoaded        (SaveData data)
         {
