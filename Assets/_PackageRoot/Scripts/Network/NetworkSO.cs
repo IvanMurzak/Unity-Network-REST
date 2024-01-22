@@ -9,125 +9,125 @@ using UnityEngine.Networking;
 
 namespace Network.Extension
 { 
-	public abstract class NetworkSO : SaverScriptableObject<NetworkSO.SaveData>
-	{
-												public		const		long						AccessTokenExpiredCode		= 401;
+    public abstract class NetworkSO : SaverScriptableObject<NetworkSO.SaveData>
+    {
+                                                public      const       long                        AccessTokenExpiredCode      = 401;
 
-												protected	override	string						SaverPath					=> "network";
-												protected	override	string						SaverFileName				=> $"network_{name}.db";
+                                                protected   override    string                      SaverPath                   => "network";
+                                                protected   override    string                      SaverFileName               => $"network_{name}.db";
 
-		// -------------------------------------------------------------------------------------------------------------		---------------------------------------
+        // -------------------------------------------------------------------------------------------------------------        ---------------------------------------
 
-		[BoxGroup("Settings"), Required]		public					string						rootEndpoint;
-		[BoxGroup("Settings")]					public					bool						debug						= true;
-		[BoxGroup("Settings"), ShowIf("debug")]	public					bool						debugHeaders				= true;
-		[BoxGroup("Settings")]
-		[HideReferenceObjectPicker]				public					Dictionary<string, string>	rootHeaders					= new Dictionary<string, string>();
+        [BoxGroup("Settings"), Required]        public                  string                      rootEndpoint;
+        [BoxGroup("Settings")]                  public                  bool                        debug                       = true;
+        [BoxGroup("Settings"), ShowIf("debug")] public                  bool                        debugHeaders                = true;
+        [BoxGroup("Settings")]
+        [HideReferenceObjectPicker]             public                  Dictionary<string, string>  rootHeaders                 = new Dictionary<string, string>();
 
-												public					RequestEvents<object>		GlobalEvents				{ get; } = new RequestEvents<object>();
-												public					bool						IsAuthorized				=> !string.IsNullOrEmpty(Data?.accessToken);
-												public					SaveData					GetData						=> Data;
+                                                public                  RequestEvents<object>       GlobalEvents                { get; } = new RequestEvents<object>();
+                                                public                  bool                        IsAuthorized                => !string.IsNullOrEmpty(Data?.accessToken);
+                                                public                  SaveData                    GetData                     => Data;
 
-																		CompositeDisposable			compositeDisposable			= new CompositeDisposable();
+                                                                        CompositeDisposable         compositeDisposable         = new CompositeDisposable();
 
-												protected	virtual		string						AccessTokenHeader
-												{
-													set
-													{
-														if (string.IsNullOrEmpty(value))
-														{
-															if (rootHeaders.ContainsKey("Cookie"))
-																rootHeaders.Remove("Cookie");
-														}
-														else
-														{
-															rootHeaders["Cookie"] = $"{value}";
-														}
-													}
-												}
+                                                protected   virtual     string                      AccessTokenHeader
+                                                {
+                                                    set
+                                                    {
+                                                        if (string.IsNullOrEmpty(value))
+                                                        {
+                                                            if (rootHeaders.ContainsKey("Cookie"))
+                                                                rootHeaders.Remove("Cookie");
+                                                        }
+                                                        else
+                                                        {
+                                                            rootHeaders["Cookie"] = $"{value}";
+                                                        }
+                                                    }
+                                                }
 
 
-		protected	override	void					OnEnable			()
-		{
-			AccessTokenHeader = null;
+        protected   override    void                    OnEnable            ()
+        {
+            AccessTokenHeader = null;
 
-			base.OnEnable();
-			Debug.Log($"{name}.OnEnable", this);
+            base.OnEnable();
+            Debug.Log($"{name}.OnEnable", this);
 
-			compositeDisposable.Clear();
-			GlobalEvents.OnHttpError.Where(httpError => httpError.httpResponseCode == AccessTokenExpiredCode)
-				.Subscribe(httpError => SetToken(null, null))			
-				.AddTo(compositeDisposable);
-		}
-		protected	override	void					OnDataLoaded		(SaveData data)
-		{
+            compositeDisposable.Clear();
+            GlobalEvents.OnHttpError.Where(httpError => httpError.httpResponseCode == AccessTokenExpiredCode)
+                .Subscribe(httpError => SetToken(null, null))           
+                .AddTo(compositeDisposable);
+        }
+        protected   override    void                    OnDataLoaded        (SaveData data)
+        {
             Debug.Log($"{name}.OnDataLoaded", this);
             Data = new SaveData()
-			{
-				accessToken = data.accessToken,
-				refreshToken = data.refreshToken
-			};
-			AccessTokenHeader = Data.accessToken;
-		}
+            {
+                accessToken = data.accessToken,
+                refreshToken = data.refreshToken
+            };
+            AccessTokenHeader = Data.accessToken;
+        }
 
 
-		public					void					SetToken			(string accessToken, string refreshToken)
-		{
-			Data.accessToken	= accessToken; // TODO: Data could be null should fix it!
-			Data.refreshToken	= refreshToken;
-			AccessTokenHeader	= Data.accessToken;
-			SaveDelayed(TimeSpan.FromSeconds(1));
-		}
-		public async			UniTask<Request<T>>		SendRequest<T>		(Request<T> request)
-		{
-			var compositeDisposable = request.Events.Subscribe(GlobalEvents);
+        public                  void                    SetToken            (string accessToken, string refreshToken)
+        {
+            Data.accessToken    = accessToken; // TODO: Data could be null should fix it!
+            Data.refreshToken   = refreshToken;
+            AccessTokenHeader   = Data.accessToken;
+            SaveDelayed(TimeSpan.FromSeconds(1));
+        }
+        public async            UniTask<Request<T>>     SendRequest<T>      (Request<T> request)
+        {
+            var compositeDisposable = request.Events.Subscribe(GlobalEvents);
 
-			if (debug)
-			{
-				var id = Request<T>.IncrementalID;
+            if (debug)
+            {
+                var id = Request<T>.IncrementalID;
 
                 Debug.Log($"{name} [{request.RESTMethod}] {id} - {request.RequestURL}", this);
-				if (debugHeaders)
-				{
-					var headers = request.GetHeaders();
-					foreach (var key in headers.Keys)
-					{
+                if (debugHeaders)
+                {
+                    var headers = request.GetHeaders();
+                    foreach (var key in headers.Keys)
+                    {
                         Debug.Log($"{name} Header {key} : {headers[key]}", this);
-					}
-				}
-				var debugEvents = new DebugRequestEvents<T>(compositeDisposable, request, id);
-				compositeDisposable.Add(request.Events.Subscribe(debugEvents));
-			}
+                    }
+                }
+                var debugEvents = new DebugRequestEvents<T>(compositeDisposable, request, id);
+                compositeDisposable.Add(request.Events.Subscribe(debugEvents));
+            }
 
-			await request.InternalSendRequest();
-			if (debug && debugHeaders && request.LastUnityRequest != null)
-			{
-				if (debugHeaders)
-				{
-					var headers = request.LastUnityRequest.GetResponseHeaders();
-					foreach (var key in headers.Keys)
-					{
-						Debug.Log($"{name} Response Header {key} : {headers[key]}", this);
-					}
-				}
-			}
-			compositeDisposable.Dispose();
-			return request;
+            await request.InternalSendRequest();
+            if (debug && debugHeaders && request.LastUnityRequest != null)
+            {
+                if (debugHeaders)
+                {
+                    var headers = request.LastUnityRequest.GetResponseHeaders();
+                    foreach (var key in headers.Keys)
+                    {
+                        Debug.Log($"{name} Response Header {key} : {headers[key]}", this);
+                    }
+                }
+            }
+            compositeDisposable.Dispose();
+            return request;
 
-	#if UNITY_EDITOR && ZENJECT
-			if (!Application.isPlaying && Zenject.ProjectContext.HasInstance)
-				DestroyImmediate(Zenject.ProjectContext.Instance.gameObject);
-	#endif
-		}
+    #if UNITY_EDITOR && ZENJECT
+            if (!Application.isPlaying && Zenject.ProjectContext.HasInstance)
+                DestroyImmediate(Zenject.ProjectContext.Instance.gameObject);
+    #endif
+        }
 
-		[Button(ButtonSizes.Medium), GUIColor("AlarmColor"), BoxGroup("Settings"), HorizontalGroup("Settings/1")] public void ClearCookieCache() => UnityWebRequest.ClearCookieCache();
-		[Button(ButtonSizes.Medium), GUIColor("AlarmColor"), BoxGroup("Settings"), HorizontalGroup("Settings/1")] public void ClearAccessToken() { Data.accessToken = ""; Save(); }
+        [Button(ButtonSizes.Medium), GUIColor("AlarmColor"), BoxGroup("Settings"), HorizontalGroup("Settings/1")] public void ClearCookieCache() => UnityWebRequest.ClearCookieCache();
+        [Button(ButtonSizes.Medium), GUIColor("AlarmColor"), BoxGroup("Settings"), HorizontalGroup("Settings/1")] public void ClearAccessToken() { Data.accessToken = ""; Save(); }
 
 
-		public class SaveData
-		{
-			public string accessToken;
-			public string refreshToken;
-		}	
-	}
+        public class SaveData
+        {
+            public string accessToken;
+            public string refreshToken;
+        }   
+    }
 }
