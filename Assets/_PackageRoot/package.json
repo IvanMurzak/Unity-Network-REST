@@ -2,9 +2,9 @@
   "name": "extensions.unity.network",
   "displayName": "Unity Network REST extension",
   "author": { "name": "Ivan Murzak", "url": "https://github.com/IvanMurzak" },
-  "version": "1.4.1",
+  "version": "1.4.2",
   "unity": "2019.2",
-  "description": "Library for managering Network requests, especially REST API",
+  "description": "Library for managing Network requests, especially REST API",
   "keywords": [
     "REST",
     "network",
