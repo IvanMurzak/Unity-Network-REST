@@ -12,13 +12,13 @@ REST plugin for client app/game to communicate with single or multiple remote se
   - ✔️ DELETE
 - :white_check_mark: JSON serialization/deserialization
 - :white_check_mark: Headers control
-- :white_check_mark: Requests in dedicated background thread
+- :white_check_mark: Requests in a dedicated background thread
 
 # How to install - Option 1 (RECOMMENDED)
 
 - Install [ODIN Inspector](https://odininspector.com/)
 - Install [OpenUPM-CLI](https://github.com/openupm/openupm-cli#installation)
-- Open command line in Unity project folder
+- Open the command line in Unity project folder
 - `openupm add extensions.unity.network`
 
 # How to install - Option 2
@@ -46,7 +46,7 @@ REST plugin for client app/game to communicate with single or multiple remote se
 
 # How to use
 ## STEP 1: Create Server representation as ScriptableObject instance
-Create class for representing server, let's call it ``RemoteServerSO``. Extend the class from ``NetworkSO``. In Unity Editor press right mouse click in project and create new instance of server representation using menu: ``Tools/Remote Server``. Select the instance and put into server endpoint. We will use the instance for sending requests to the server.
+Create a class for representing the server, let's call it ``RemoteServerSO``. Extend the class from ``NetworkSO``. Press the right mouse click on the project in Unity Editor, and create a new instance of server representation using the menu: ``Tools/Remote Server``. Select the instance and put it into the server endpoint. We will use the instance for sending requests to the server.
 ```C#
 [CreateAssetMenu(fileName = "RemoteServer", menuName = "Tools/Remote Server", order = 0)]
 public class RemoteServerSO : NetworkSO
@@ -56,7 +56,7 @@ public class RemoteServerSO : NetworkSO
 ```
 
 ## STEP 2: Create request
-Let's imagine the server by the Enpoint ``api/data`` returns the JSON.
+Let's imagine the server by the Endpoint ``api/data`` returns the JSON.
 
 <details>
     <summary>JSON body - response from a server</summary>
@@ -74,7 +74,7 @@ Let's imagine the server by the Enpoint ``api/data`` returns the JSON.
 }</pre></code>
 </details>
 
-Each unique request in REST API should be represented as C# class. Let's create one GET request as example. Need to override ``Endpoint`` for this specific request.
+Each unique request in REST API should be represented as a C# class. Let's create one GET request as an example. Need to override ``Endpoint`` for this specific request.
 ```C#
 public class GetDataRequest : RequestGet<Data>
 {
@@ -106,12 +106,12 @@ Creating request instance and providing server instance
 var request = new GetRemoteConfigs(remoteServer);
 ```
 
-### Option 1 - just send request
+### Option 1 - just send a request
 ```C#
 request.SendRequest().Forget();
 ```
 
-### Option 2 - send request and wait for response with valid data deserialization
+### Option 2 - send request and wait for a response with valid data deserialization
 ```C#
 var data = (await request.SendRequest()).ResponseData;
 ```
@@ -125,7 +125,7 @@ request.SubscribeOnSuccess(data =>
 ```
 
 # Request callbacks
-Subscription should be done before call ``SendRequest()``
+Subscription should be done before calling ``SendRequest()``
 ```C#
 // Response received, data successfully serialized from JSON to C# object
 request.SubscribeOnSuccess(data =>
@@ -151,13 +151,13 @@ request.SubscribeOnHttpError(httpError =>
     // doing something
 }, this);
 
-// Network error, related with internet connection, can't reach the server at all
+// Network error, related to an internet connection, can't reach the server at all
 request.SubscribeOnNetworkError(networkError =>
 {
     // doing something
 }, this);
 
-// Progress is float number in range from 0.0f to 1.0f
+// Progress is a float number in the range from 0.0f to 1.0f
 request.SubscribeOnProgress(progress =>
 {
     // doing something with data
