@@ -28,7 +28,7 @@ REST plugin for client app/game to communicate with single or multiple remote se
 ```json
 {
   "dependencies": {
-    "extensions.unity.network": "1.4.2",
+    "extensions.unity.network": "1.4.3",
   },
   "scopedRegistries": [
     {
